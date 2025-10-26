@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Reflecting on Microsoft Fabric — Tasmia Binte Monzoor</title>
+    <link href="/assets/css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="brand">Tasmia Binte Monzoor</div>
+      <nav class="navlinks">
+        <a href="/index.html#about">About</a>
+        <a href="/index.html#experience">Experience</a>
+        <a href="/index.html#projects">Projects</a>
+        <a href="/blogs.html">Blogs</a>
+        <a href="/index.html#education">Education</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <a class="resume-btn" href="/New Resume (1).pdf" target="_blank">Download CV</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="article-hero article-hero-offset">
+        <a class="back" href="/blogs.html">← Back to Blogs</a>
+        <a class="back-main" href="/index.html">Back to main</a>
+        <div class="article-header">
+          <h1>Reflecting on Microsoft Fabric</h1>
+          <p class="article-meta">Oct 26, 2025 · Tools · Microsoft Fabric · Power BI · Automation</p>
+        </div>
+      </div>
+
+      <article class="article-body">
+        <p class="lead">I recently completed the Microsoft Fabric workshop (DP-600) and spent time building an end-to-end reporting pipeline. In this post I summarise my key takeaways and practical patterns that made the workflows robust.</p>
+
+        <img src="/images/microsoft_fabric.jpg" alt="Fabric dashboard" />
+
+       <h3>Microsoft Fabric Overview</h3>
+<p>Microsoft Fabric is a unified, AI-powered data platform that simplifies the entire data lifecycle—from ingestion to visualization. It is a cloud-based solution providing end-to-end services for data management, analytics, and decision-making, seamlessly integrating Azure and Power BI for real-time insights, data processing, and machine learning to enhance business decisions.</p>
+
+<h4>Why Microsoft Fabric?</h4>
+<ul>
+  <li><strong>Unified Data Platform:</strong> Covers data ingestion, preparation, storage, analysis, and visualization.</li>
+  <li><strong>AI-Powered Analytics:</strong> Automates tasks and provides real-time insights using built-in ML models.</li>
+  <li><strong>Seamless Azure Integration:</strong> Enhances processing capabilities for large and complex datasets.</li>
+  <li><strong>Cross-Platform Collaboration:</strong> Enables data scientists, analysts, and business users to work on the same datasets.</li>
+  <li><strong>Scalability & Flexibility:</strong> Adapts to growing data volumes and evolving business needs without compromising performance or security.</li>
+</ul>
+
+<h4>Key Features</h4>
+<ul>
+  <li><strong>Power BI:</strong> Transform data into interactive visual insights.</li>
+  <li><strong>Data Factory:</strong> Automate data migration and integration for smooth analysis.</li>
+  <li><strong>Data Activator:</strong> Monitor data proactively and set automated alerts.</li>
+  <li><strong>Industry Solutions:</strong> Pre-built templates and industry-specific insights.</li>
+  <li><strong>Synapse Data Engineering:</strong> Clean, transform, and prepare data at scale in a low-code environment.</li>
+  <li><strong>Synapse Data Science:</strong> Build and deploy advanced ML models in a unified workspace.</li>
+  <li><strong>Synapse Data Warehouse:</strong> Secure, scalable storage optimized for fast querying.</li>
+  <li><strong>Synapse Real-Time Analytics:</strong> Gain real-time insights from streaming data.</li>
+</ul>
+
+<h4>Per User License</h4>
+<ul>
+  <li><strong>Free:</strong> Allows you to create and share Fabric content other than Power BI items if you have access to a Fabric capacity (trial or paid).</li>
+  <li><strong>Pro:</strong> Lets you share Power BI content with other users. Every organization needs at least one user with a Pro or Premium Per User (PPU) license to use Power BI within Fabric.
+    <ul>
+      <li>SKUs smaller than F64 require a Power BI Pro or PPU license for each user consuming Power BI content.</li>
+      <li>Content in workspaces on F64 or larger Fabric capacities is available for users with a Free license if they have a viewer role.</li>
+    </ul>
+  </li>
+  <li><strong>Premium per-user (PPU):</strong> Allows organizations to access Power BI Premium features by licensing each user with PPU instead of purchasing Premium capacity.
+    <ul>
+      <li>More cost-effective when fewer than 250 users need Premium features.</li>
+      <li>Uses a shared capacity across the organization to provide computing power for Power BI operations.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>Delta Parquet Format</h4>
+<p>Parquet is a columnar file format commonly used in data lakes for efficient storage and faster queries. However, it has limitations with updates, deletes, transactions, and time travel.</p>
+<p>Delta Parquet (Delta Lake) enhances Parquet by adding a transaction log (<code>_delta_log</code>), enabling:</p>
+<ul>
+  <li>ACID transactions for reliable and consistent operations.</li>
+  <li>Direct updates and deletes, not just append operations.</li>
+  <li>Time travel to query older versions of data.</li>
+  <li>Schema evolution for handling data structure changes over time.</li>
+</ul>
+<p>In Microsoft Fabric, all tables are stored in Delta Parquet format by default, ensuring consistent, fast, and easily manageable data usable across SQL, Spark, and Power BI.</p>
+
+<h4>Workspace Roles</h4>
+<ul>
+  <li><strong>Admin:</strong> Full control over the workspace, including role and permission management.</li>
+  <li><strong>Member:</strong> Can create, modify, and share items within the workspace.</li>
+  <li><strong>Contributor:</strong> Can create and modify items with limited sharing capabilities.</li>
+  <li><strong>Viewer:</strong> Can view items but cannot modify or share them.</li>
+</ul>
+
+
+<h4>Advantages</h4>
+<ul>
+  <li>Data-driven decisions with AI and machine learning.</li>
+  <li>Reduced data complexity with end-to-end lifecycle management.</li>
+  <li>Improved collaboration across teams.</li>
+  <li>Cloud-native architecture for scalable, secure data management.</li>
+</ul>
+
+<h4>Use Cases by Industry (just in a glance..)</h4>
+<ul>
+  <li><strong>Retail:</strong> Unify customer data, analyze sales forecasts, optimize inventory, and personalize shopping experiences.</li>
+  <li><strong>Healthcare:</strong> Integrate data from EHRs, medical devices, and surveys; personalize treatment and improve diagnostics.</li>
+  <li><strong>Sustainability:</strong> Process ESG metrics, optimize initiatives, and comply with reporting requirements.</li>
+</ul>
+
+<h4>Interoperability with Other Services</h4>
+<ul>
+  <li><strong>Azure SQL Database:</strong> Structured data storage with unstructured data processing.</li>
+  <li><strong>Power BI:</strong> Real-time visualization and reporting.</li>
+  <li><strong>Azure Integration:</strong> Secure, scalable cloud infrastructure.</li>
+</ul>
+
+<h4>Business Model</h4>
+<p>SaaS with pay-as-you-go or reserved <strong>Fabric Capacity</strong>. Benefits include:</p>
+<ul>
+  <li>Single pool of compute for all workloads.</li>
+  <li>Flexible scaling up/down as needed.</li>
+  <li>Centralized dashboard for usage and cost monitoring.</li>
+</ul>
+
+<h4>Data Management & Architecture</h4>
+<p><strong>Medallion Architecture:</strong></p>
+<ul>
+  <li>Bronze → Raw data</li>
+  <li>Silver → Transformed data</li>
+  <li>Gold → Curated/Final data</li>
+</ul>
+
+<p><strong>Data Storage:</strong> Delta Parquet format for ACID transactions, schema evolution, and time travel.</p>
+
+<h4>Mirroring vs OneLake</h4>
+<ul>
+  <li><strong>Mirroring:</strong>
+    <ul>
+      <li>Makes an exact copy of data in another location.</li>
+      <li>Used mainly for backup or replication.</li>
+      <li>Changes in the original don’t automatically sync unless configured.</li>
+      <li>Think of it as a “photocopy” of your data.</li>
+    </ul>
+  </li>
+  <li><strong>OneLake:</strong>
+    <ul>
+      <li>Fabric’s centralized data lake.</li>
+      <li>Stores all tables in Delta Parquet format.</li>
+      <li>Single source of truth: all tools (SQL, Power BI, Spark) access the same data.</li>
+      <li>Changes are immediately available everywhere.</li>
+      <li>Think of it as a “shared cloud notebook” for all your data.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Workspace Roles:</strong></p>
+<ul>
+  <li>Admin – Full control</li>
+  <li>Member – Create, modify, share items</li>
+  <li>Contributor – Create/modify items, limited sharing</li>
+  <li>Viewer – View only</li>
+</ul>
+
+<h4>Data Movement & Transformation</h4>
+<ul>
+  <li><strong>Dataflow Gen2:</strong> Prepares and transforms data in Delta Parquet format, supports incremental refresh and time travel.</li>
+  <li><strong>Pipelines:</strong> Orchestrates multiple data tasks like dataflows, copy data, notebooks, and control flows.</li>
+  <li><strong>Data Wrangler:</strong> Clean, transform, and prepare data visually without code.</li>
+  <li><strong>Semantic Tables:</strong> Store metadata and relationships to make analytics easier.</li>
+</ul>
+
+<h4>Data Modeling Concepts</h4>
+<ul>
+  <li><strong>Fact Table:</strong> Stores numeric data, tall/slim, can have duplicates.</li>
+  <li><strong>Dimension Table:</strong> Stores descriptive/categorical info, wide/fat, no duplicates.</li>
+  <li><strong>Flat Table:</strong> Single initial table for analysis.</li>
+  <li><strong>Star Schema:</strong> One fact table connected to denormalized dimension tables for fast querying.</li>
+  <li><strong>Snowflake Schema:</strong> Normalized dimension tables to save space and maintain consistency.</li>
+</ul>
+
+<h4>Power BI Concepts</h4>
+<ul>
+  <li><strong>Table vs Matrix:</strong> Table shows raw data; Matrix supports summarization, grouping, hierarchies, and drill-down.</li>
+  <li><strong>Row & Filter Context:</strong> Row context processes each row individually; filter context applies slicers or visual filters automatically.</li>
+  <li><strong>Pivoting & Unpivoting:</strong> Restructure data for analysis.</li>
+  <li><strong>Duplicate vs Reference:</strong> Duplicate = independent copy; Reference = linked version with transformations.</li>
+  <li><strong>Import Mode:</strong> Data loaded into memory; fast but requires refresh.</li>
+  <li><strong>DirectQuery Mode:</strong> Queries live data; always fresh but slower.</li>
+</ul>
+
+<h4>Practical Tasks & Exercises</h4>
+<ul>
+  <li>Create pipelines to pull data from Azure Blob Storage and SharePoint.</li>
+  <li>Load data from raw to silver, transform, and store in gold warehouse.</li>
+  <li>Create semantic models and publish dashboards.</li>
+  <li>Power Apps Invoice/Employee Salary Slip App using Fabric backend.</li>
+  <li>Clean, transform, and create dashboards from IPL dataset using Snowflake and OneLake.</li>
+</ul>
+
+<h4>Additional Concepts</h4>
+<ul>
+  <li>Real-time intelligence: KQL for live analysis; OneLake for historical data.</li>
+  <li>Mirroring vs OneLake: Mirroring = backup copy; OneLake = centralized single source of truth.</li>
+  <li>Dataflow Gen1 vs Gen2: Gen2 is faster, scalable, supports Delta Parquet.</li>
+</ul>
+
+<h4>Outcome</h4>
+<p>Microsoft Fabric enables end-to-end data management, AI-driven insights, and collaborative analytics. By combining Delta Lake storage, pipelines, dataflows, semantic models, and Power BI visualizations, users can transform raw data into actionable intelligence efficiently and securely.</p>
+
+      </article>
+
+    <script src="/assets/js/main.js" type="module"></script>
+  </body>
+</html>

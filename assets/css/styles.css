@@ -1,0 +1,280 @@
+:root{
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --accent: #0ea5a4;
+  --fade: rgba(2,6,23,0.06);
+  --panel-bg: #f8fafc;
+  --glass: rgba(15,23,42,0.04);
+}
+[data-theme="dark"]{
+  --bg: #071022;
+  --muted: #9aa4b2;
+  --text: #e6eef8;
+  --accent: #4fd1c5;
+  --fade: rgba(255,255,255,0.04);
+  --panel-bg: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.02);
+}
+
+/* Dark theme: polished main scrollbar for .content (lighter, semi-transparent thumb) */
+[data-theme="dark"] .content{
+  /* Firefox: thumb on track */
+  scrollbar-color: rgba(255,255,255,0.12) rgba(255,255,255,0.02);
+}
+[data-theme="dark"] .content::-webkit-scrollbar{width:10px}
+[data-theme="dark"] .content::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);border-radius:999px}
+[data-theme="dark"] .content::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  border-radius:999px;
+  border:2px solid rgba(0,0,0,0.06);
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02), 0 4px 10px rgba(0,0,0,0.35);
+  background-clip:padding-box;
+  transition:background .18s ease, transform .12s ease;
+}
+[data-theme="dark"] .content::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
+  transform:scale(1.03);
+}
+
+/* Global/window scrollbar styling for dark theme (override browser default white scrollbar) */
+[data-theme="dark"] html, [data-theme="dark"] body{
+  /* Firefox: set thumb and track colors */
+  scrollbar-color: rgba(255,255,255,0.12) rgba(255,255,255,0.02);
+}
+
+[data-theme="dark"] html::-webkit-scrollbar, [data-theme="dark"] body::-webkit-scrollbar{width:12px}
+[data-theme="dark"] html::-webkit-scrollbar-track, [data-theme="dark"] body::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);border-radius:999px}
+[data-theme="dark"] html::-webkit-scrollbar-thumb, [data-theme="dark"] body::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  border-radius:999px;border:3px solid rgba(0,0,0,0.06);background-clip:padding-box;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02), 0 6px 18px rgba(0,0,0,0.35);
+}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover, [data-theme="dark"] body::-webkit-scrollbar-thumb:hover{transform:scale(1.04);background:linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08))}
+
+/* Ensure the left fixed panel doesn't show a conflicting scrollbar; style it too for dark theme */
+[data-theme="dark"] .leftpanel::-webkit-scrollbar{width:8px}
+[data-theme="dark"] .leftpanel::-webkit-scrollbar-track{background:transparent}
+[data-theme="dark"] .leftpanel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:999px}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
+}
+
+/* Smooth scrolling for in-page navigation and programmatic scrolls */
+html{scroll-behavior:smooth}
+
+/* Top nav (fixed) */
+.topnav{
+  position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));backdrop-filter: blur(4px);z-index:50;
+}
+.topnav .brand{font-weight:700;font-size:18px}
+.topnav .navlinks{display:flex;gap:16px}
+.topnav .navlinks a{color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:6px}
+.topnav .navlinks a:hover{color:var(--text);background:var(--glass)}
+.topnav .actions{display:flex;gap:12px;align-items:center}
+.topnav button{background:none;border:1px solid transparent;padding:8px;border-radius:8px;cursor:pointer}
+.resume-btn{display:inline-block;padding:8px 12px;background:var(--accent);color:white;border-radius:8px;text-decoration:none}
+
+/* Layout with fixed left panel */
+.leftpanel{
+  position:fixed;top:64px;left:0;bottom:0;width:280px;padding:24px;background:var(--panel-bg);border-right:1px solid var(--glass);overflow:auto;
+}
+.leftpanel .avatar{width:96px;height:96px;position:relative;margin:0 auto 12px}
+.leftpanel .avatar img{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block}
+.leftpanel .avatar-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,var(--accent),#6ee7b7);font-weight:700;color:#012;font-size:16px}
+.leftpanel h1{margin:8px 0 2px;font-size:20px}
+.leftpanel .title{margin:0;color:var(--muted);font-size:14px}
+.leftpanel section{margin-top:18px}
+.leftpanel h3{margin:0 0 8px;font-size:13px}
+.leftpanel ul{padding-left:18px;margin:0}
+
+/* Hide visible scrollbar on the left panel but keep it scrollable */
+.leftpanel{
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.leftpanel::-webkit-scrollbar{display:none} /* Chrome, Safari */
+
+.photo-actions{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.upload-btn{display:inline-block;padding:6px 8px;background:transparent;border:1px solid var(--glass);border-radius:8px;cursor:pointer;font-size:13px}
+.linkedin-import{display:flex;gap:6px}
+.linkedin-import input{flex:1;padding:6px;border-radius:8px;border:1px solid var(--glass);background:transparent;color:var(--text)}
+.linkedin-import button{padding:6px 8px;border-radius:8px;border:1px solid var(--glass);background:var(--accent);color:white;cursor:pointer}
+
+/* Main content area */
+.content{margin-left:320px;padding:92px 48px 48px;min-height:100vh}
+
+/* Custom scrollbar for the main content area (thin, theme-aware, smooth) */
+.content{
+  scrollbar-width: thin; /* Firefox */
+  /* make the main right scrollbar sleek and black */
+  scrollbar-color: #0b0b0b transparent; /* thumb color (black) and track (transparent) for Firefox */
+}
+.content::-webkit-scrollbar{width:10px;height:10px}
+.content::-webkit-scrollbar-track{background:transparent;border-radius:999px}
+.content::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#000000,#0b0b0b);border-radius:999px;border:2px solid rgba(255,255,255,0.02);box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 3px 10px rgba(0,0,0,0.25);background-clip:padding-box;transition:background .18s ease, transform .12s ease}
+.content::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#1a1a1a,#000000);transform:scale(1.03)}
+
+/* Make sure the scrollbar doesn't overlap content on small screens */
+@media (max-width:900px){
+  .content{padding-right:20px}
+}
+.panel{background:transparent;padding:22px 0;border-bottom:1px dashed var(--glass)}
+.panel h2{margin-top:0}
+.job h3{margin-bottom:6px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:8px}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.project{padding:12px;background:var(--panel-bg);border-radius:8px}
+
+/* Expertise / project cards: reuse .card visuals but slightly more compact */
+.project.card{background:var(--panel-bg);border-radius:10px;box-shadow:0 8px 22px rgba(2,6,23,0.06);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}
+.project.card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(2,6,23,0.09)}
+.project.card .card-media{height:86px;background-size:cover;background-position:center}
+.project.card h4{margin:10px 12px 4px}
+.project.card .teaser{margin:0 12px 12px;color:var(--muted);font-size:0.95rem}
+.project.card .card-tags{padding:8px 12px 0}
+/* Expertise slider */
+.expertise-slider{position:relative;display:flex;align-items:center;margin-top:12px}
+.slider-viewport{overflow-x:auto;flex:1;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;position:relative}
+.slider-track{display:flex;gap:14px;padding:8px 12px}
+.slider-viewport{scroll-snap-type:x mandatory}
+
+/* Hide native scrollbar but keep scrolling (cross-browser) */
+.slider-viewport{
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.slider-viewport::-webkit-scrollbar{display:none} /* Chrome, Safari */
+
+/* Soft fade edges that hint at horizontal content */
+.slider-viewport::before, .slider-viewport::after{
+  content:'';position:absolute;top:0;bottom:0;width:56px;pointer-events:none;z-index:3;transition:opacity .22s ease,transform .22s ease;
+}
+.slider-viewport::before{left:0;background:linear-gradient(90deg, var(--fade), rgba(0,0,0,0));opacity:0;transform:translateX(-6px)}
+.slider-viewport::after{right:0;background:linear-gradient(270deg, var(--fade), rgba(0,0,0,0));opacity:0;transform:translateX(6px)}
+.expertise-stage.active .slider-viewport::before, .expertise-stage.active .slider-viewport::after{opacity:1;transform:none}
+
+/* Make keyboard focus clear for accessibility */
+.slider-viewport:focus{outline:none}
+.slider-viewport:focus-visible{box-shadow:0 0 0 3px rgba(14,165,164,0.16);border-radius:12px}
+.slider-track .project{flex:0 0 320px;scroll-snap-align:center}
+.slider-btn{background:var(--panel-bg);border:1px solid var(--glass);width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;margin:0 8px}
+.slider-btn:hover{transform:translateY(-3px)}
+
+/* Activity cards: simple static tiles (restore original look) */
+.activities-grid .card{opacity:1;transform:none;transition:transform .18s ease,box-shadow .18s ease}
+.activities-grid .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,6,23,0.08)}
+
+/* Make slider touch-friendly */
+.slider-track.is-dragging{cursor:grabbing}
+
+/* Expertise stage: sticky, appear while in view, behave like 'news plates' */
+.expertise-stage{position:relative;margin:22px 0}
+.expertise-stage .expertise-pin{position:sticky;top:92px;width:100%;display:flex;align-items:center;justify-content:center;transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1);opacity:0;transform:translateY(22px);pointer-events:none}
+.expertise-stage.active .expertise-pin{opacity:1;transform:none;pointer-events:auto}
+.expertise-stage .slider-viewport{width:78%;max-width:980px}
+.slider-track{gap:24px}
+.slider-track .project{flex:0 0 100%;max-width:900px;scroll-snap-align:center}
+
+/* Single-plate style: larger, prominent */
+.slider-track .project{border-radius:14px;padding:0;overflow:hidden}
+.slider-track .project .card-media{height:200px}
+.slider-track .project h4{font-size:1.25rem;padding:12px}
+.slider-track .project .teaser{padding:0 12px 18px}
+
+/* Hide the expertise-pin when not active to 'vanish' effect */
+.expertise-stage:not(.active) .expertise-pin{visibility:hidden}
+
+
+.footer-note{
+  padding:28px 0 10px;
+  color:var(--muted);
+  /* slightly more visible divider (light theme); dark theme overridden below */
+  border-top:1px solid rgba(15,23,42,0.08);
+  margin-top:28px;
+  padding-top:20px;
+  font-size:0.9rem;
+}
+
+/* Dark theme: ensure footer divider is visible against dark background */
+[data-theme="dark"] .footer-note{
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+
+/* Activities cards */
+.activities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:var(--panel-bg);border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:0 6px 18px rgba(2,6,23,0.06);transition:transform .18s ease,box-shadow .18s ease;position:relative;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,6,23,0.08)}
+.card-media{height:140px;width:100%;display:block}
+.card-media img.card-img{display:block;width:100%;height:100%;object-fit:cover;border-radius:0}
+.card.has-image .card-media{background:none}
+.card h4{margin:10px;padding:0 12px 8px}
+.card .teaser{padding:0 12px 16px;color:var(--muted);font-size:14px;margin-top:auto}
+
+/* activity-excerpt was removed to keep tiles compact */
+
+/* teaser overlay for larger screens */
+.card .teaser-overlay{position:absolute;left:0;right:0;bottom:0;padding:12px;background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.25));color:white;opacity:0;transition:opacity .18s ease}
+.card:hover .teaser-overlay{opacity:1}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:100}
+.modal[aria-hidden="false"]{display:flex}
+.modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.5)}
+.modal-content{position:relative;background:var(--bg);color:var(--text);padding:24px;border-radius:12px;max-width:720px;width:94%;z-index:10;box-shadow:0 20px 50px rgba(2,6,23,0.2)}
+.modal-close{position:absolute;right:12px;top:8px;border:none;background:transparent;font-size:22px;cursor:pointer}
+
+.article-hero{max-width:860px;margin:48px auto 12px;padding:0 20px}
+/* ensure article hero sits below the fixed navbar so the back link is visible */
+.article-hero-offset{margin-top:92px}
+
+/* Article page shared styles (used by all activity/article pages) */
+.article-hero .back{display:inline-block;margin-bottom:18px;color:var(--muted);text-decoration:none}
+.article-header h1{margin:8px 0 6px}
+.article-meta{color:var(--muted);margin-bottom:18px}
+.article-body{max-width:860px;margin:0 auto;padding:0 20px 80px}
+.article-body img{max-width:100%;border-radius:8px;margin:12px 0}
+
+/* subtle 'Back to main' button used on article/blog pages */
+.back-main{
+  display:inline-block;
+  margin-left:12px;
+  margin-bottom:18px;
+  padding:6px 10px;
+  background:var(--panel-bg);
+  color:var(--accent);
+  border-radius:8px;
+  text-decoration:none;
+  border:1px solid var(--glass);
+  font-weight:600;
+}
+.back-main:hover{background:linear-gradient(180deg, rgba(0,0,0,0.01), rgba(0,0,0,0.02));transform:translateY(-1px)}
+
+/* Expertise card tags */
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.06);color:var(--muted);font-size:12px;margin-right:8px}
+.card-tags{padding:8px 12px 0}
+
+/* Emphasize article headings */
+.article-body h3{margin-top:18px}
+.article-body p.lead{font-size:1.05rem;color:var(--muted);line-height:1.6}
+
+
+
+/* Responsive */
+@media (max-width:900px){
+  .leftpanel{position:relative;width:100%;height:auto;border-right:0;border-bottom:1px solid var(--glass);top:64px}
+  .content{margin-left:0;padding:140px 20px 40px}
+  .topnav .navlinks{display:none}
+}
+
+/* Small polish */
+a{color:var(--accent)}

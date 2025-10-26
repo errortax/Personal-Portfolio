@@ -1,0 +1,11 @@
+## Netlify configuration for the static portfolio site
+# Publish from the repository root since `index.html` is in the project root.
+[build]
+  publish = "."
+
+# If you later add a build step (e.g., a bundler), set `command` to the build command
+# and change `publish` to the build output directory (for example `dist/`).
+
+[context.production.environment]
+# Optional: pin a Node version for Netlify build image if you need one for scripts
+NODE_VERSION = "18"
