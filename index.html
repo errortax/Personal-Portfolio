@@ -8,6 +8,106 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Work section: vertical timeline & reveal-on-scroll styles (polish + compact cards) -->
+    <style>
+      /* container for timeline */
+      .work-div { position: relative; padding-left: 72px; --line-fill: 0; --line-opacity: 1; }
+
+      /* thin professional vertical line that grows with scroll */
+      .work-div::before {
+        content: '';
+        position: absolute;
+        left: 36px;
+        top: 28px;
+        width: 2px; /* thinner */
+        height: calc(var(--line-fill, 0) * 1%);
+        background: linear-gradient(180deg, rgba(6,182,212,0.95), rgba(245,158,11,0.9));
+        border-radius: 2px;
+        box-shadow: 0 1px 4px rgba(6,182,212,0.06);
+        transition: height 360ms linear, opacity 300ms ease;
+        opacity: var(--line-opacity, 1);
+      }
+
+      /* compact timeline cards: image + text inline */
+      .sec-1 { position: relative; margin-bottom: .85rem; padding: .45rem; border-radius: 10px; background: var(--panel-bg); box-shadow: 0 3px 8px rgba(2,6,23,0.03); opacity: 0; transform: translateY(10px) scale(.998); transition: opacity 320ms cubic-bezier(.2,.9,.3,1), transform 320ms cubic-bezier(.2,.9,.3,1); display:flex; gap:.75rem; align-items:center; }
+
+  .work-photo { flex: 0 0 120px; display:block; border-radius:8px; overflow:hidden; }
+  .work-photo img { width:120px; height:80px; object-fit:cover; display:block; }
+
+      .details { flex:1; display:flex; flex-direction:column; gap:.35rem; }
+      .details h3 { margin:0; font-size:1rem; line-height:1.15; }
+      .details p { margin:0; color:var(--muted); font-size:0.92rem; }
+
+      /* small, refined marker */
+      .sec-1::before {
+        content: '';
+        position: absolute;
+        left: -34px;
+        top: 18px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(2,6,23,0.06);
+        border: 1.5px solid rgba(0,0,0,0.06);
+        transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+        transform: translateZ(0) scale(.85);
+      }
+
+      .sec-1::after {
+        content: '';
+        position: absolute;
+        left: -31px;
+        top: 19px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: transparent;
+        transition: background 220ms ease, transform 220ms ease;
+        transform: translateZ(0) scale(.95);
+      }
+
+      /* visible state */
+      .sec-1.in-view { opacity: 1; transform: none; }
+      .sec-1.in-view::before { transform: scale(1); border-color: rgba(6,182,212,0.95); background: #fff; }
+      .sec-1.in-view::after { background: rgba(6,182,212,0.95); transform: scale(1); }
+
+  /* professional live button */
+  .live-btn { background: linear-gradient(90deg,#c9d2d3,#00c1c1); color:#fff; border:0; padding:.6rem 1rem; min-width:96px; border-radius:10px; font-weight:700; font-size:0.95rem; box-shadow:0 6px 14px rgba(6,182,212,0.12); cursor:pointer; transition:transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease; display:inline-flex; align-items:center; justify-content:center; }
+  .live-btn:hover { transform: translateY(-2px); box-shadow:0 10px 22px rgba(6,182,212,0.12); }
+  .live-btn:active { transform: translateY(0); }
+  .live-btn:focus { outline: 3px solid rgba(6,182,212,0.18); outline-offset:2px; }
+
+  /* align live button to the right inside the details column of timeline items
+     and style it like the subtle "Back to main" control used on article pages */
+  .details .live-btn {
+    margin-left: auto;
+    margin-top: 6px;
+    display:inline-block;
+    padding:6px 10px;
+    background:var(--panel-bg);
+    color:var(--accent);
+    border-radius:8px;
+    text-decoration:none;
+    border:1px solid var(--glass);
+    font-weight:600;
+  }
+  .details .live-btn:hover{ background:linear-gradient(180deg, rgba(0,0,0,0.01), rgba(0,0,0,0.02)); transform:translateY(-1px); }
+
+      @media (max-width:900px){
+        .work-div { padding-left: 56px; }
+        .work-div::before { left: 28px; top: 18px; }
+        .sec-1 { flex-direction:row; }
+        .work-photo { flex:0 0 40%; }
+        .work-photo img { width:100%; height:120px; object-fit:cover; }
+        .sec-1::before { left: -24px; top: 14px; }
+      }
+
+      /* Work section spacing: equal gaps above and below for visual balance */
+      #work.panel { padding-top:48px; padding-bottom:48px; }
+      @media (max-width:900px){ #work.panel { padding-top:36px; padding-bottom:36px; } }
+    </style>
   </head>
   <body>
     <header class="topnav">
@@ -35,7 +135,6 @@
         <h1 id="profile-name">Tasmia Binte Monzoor</h1>
         <p class="title" id="profile-title">Intern - Software Solutions Team • Data & Analytics • Aspiring Product Manager</p>
         
-      </div>
 
       <section class="contact">
         <h3>Contact</h3>
@@ -47,7 +146,6 @@
       </section>
 
       <section class="skills">
-        <h3>Skills</h3>
         <ul>
           <li>Analytics & BI: Microsoft Fabric, Power BI, Mixpanel, Zoho Analytics</li>
           <li>AI & Automation: Microsoft Copilot, Vertex AI, Power Apps</li>
@@ -60,7 +158,6 @@
       <section class="links">
         <h3>Links</h3>
         <p><a href="#projects">Projects</a></p>
-        <p><a href="#contact">Get in touch</a></p>
       </section>
     </aside>
 
@@ -71,11 +168,9 @@
           Recent graduate in Information and Communication Engineering from BUP, specializing in Data Science, AI, ML, BI, and Cloud technologies.
         </p>
         <p>
-          I have hands-on expertise across the data lifecycle, from ingestion to visualization, using Microsoft Fabric and Power BI. For workflow automation and app development, I work with Power Apps and Power Automate. My AI development experience spans Azure AI Foundry and Vertex AI, focusing on model deployment, experimentation, and integration with business applications. For analytics and user behavior tracking, I utilize Mixpanel and Zoho Analytics to derive actionable insights and performance metrics.
-        </p>
-        <p>
-          With experience leading case studies, competitions, and research projects, I combine technical precision with analytical thinking to deliver scalable, data-driven solutions. I’m eager to contribute to teams driving innovation and intelligent automation in real-world tech applications.
-        </p>
+          Skilled in the full data lifecycle using Microsoft Fabric, Power BI, and automation tools like Power Apps, Power Automate, and Copilot Studio.       
+        Experienced with Azure AI Foundry, Vertex AI, Mixpanel, and Zoho Analytics for model deployment, analytics, and performance insights. </p> 
+        <p> Passionate about building scalable, intelligent, and data-driven solutions that drive innovation.        </p>
       </section>
 
       <section id="experience" class="panel">
@@ -84,9 +179,9 @@
           <h3>Intern — Software Solutions Team, Smart Technologies Ltd</h3>
           <p class="meta">Sept 2025 — Present</p>
           <ul>
-            <li>Completed a 1-month Microsoft Fabric (DP-600) workshop, applying Power BI and Power Automate to design end-to-end reporting workflows — automating data ingestion, transformation, and visualization across multiple sources.</li>
+            <li>Completed a 1-month Microsoft Fabric (DP-600) workshop, applying Power BI and Pipelines to design end-to-end reporting workflows — automating data ingestion, transformation, and visualization across multiple sources.</li>
             <li>Integrated Mixpanel into a budget app to track 10+ user interaction metrics and funnels, leveraging heatmaps and session replays for data-driven product enhancements; used Zoho Analytics for cross-platform performance evaluation.</li>
-            <li>Conducted a comparative study on various analytics and AI platforms, including Azure AI Foundry and Vertex AI, to assess capabilities for data integration, model deployment, and business intelligence, and developed AI agents and enterprise-grade projects to drive scalable AI adoption within business workflows.</li>
+            <li>Conducted a comparative study on various analytics and AI platforms, including Azure AI Foundry and Vertex AI, for model deployment, and business intelligence, and developed AI agents and enterprise-grade projects to drive scalable AI adoption within business workflows.</li>
           </ul>
         </article>
 
@@ -104,9 +199,9 @@
           <h3>Beta Ambassador — Microsoft Learn Student Ambassador</h3>
           <p class="meta">July 2023 — June 2025</p>
           <ul>
-            <li>Served as a Beta Ambassador for nearly 1.5 years, leading initiatives that promoted AI, Cloud, and Microsoft technologies within the student community; designed impactful sessions and mentorship programs in collaboration with a Gold Ambassador and the founder of OlearnIn.</li>
-            <li>Mentored Students to become Future Ambassadors, partnered with Tech Communities to expand event reach through strategic promotions and incentives, achieving a 45% increase in engagement.</li>
-            <li>Built technical expertise via hands-on projects with Azure AI Services, Azure Cognitive Services, and Power Automate, developing scalable and intelligent cloud solutions.</li>
+            <li>Served as a Beta Ambassador for nearly 1.5 years, leading initiatives that promoted AI, Cloud, and Microsoft technologies within the student community, designed impactful sessions and mentorship programs in collaboration with other Ambassadors.</li>
+            <li>Mentored Students to become Future Ambassadors, partnered with Tech Communities to expand event reach through strategic promotions and incentives.</li>
+            <li>Built technical expertise via hands-on projects with Azure Service, developing scalable and intelligent cloud solutions.</li>
           </ul>
         </article>
       </section>
@@ -133,6 +228,13 @@
                 <p class="teaser">Designed and deployed AI agents using Azure AI Foundry and Copilot Studio to automate workflows and support end users.</p>
               </article>
 
+              <article class="project card" data-page="expertise/powerapps-automate.html" data-img="images/powerApps.jpeg">
+                <div class="card-media" style="background:linear-gradient(135deg,#06b6d4,#f59e0b)"></div>
+                <h4>Power Apps & Power Automate</h4>
+                <div class="card-tags"><span class="chip">Power Apps</span><span class="chip">Power Automate</span><span class="chip">Low-code</span></div>
+                <p class="teaser">Built low-code apps and automated workflows to streamline data entry, approvals, and reporting across teams.</p>
+              </article>
+
               <article class="project card" data-page="expertise/mixpanel-dashboards.html" data-img="images/mixpanel.png">
                 <div class="card-media" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)"></div>
                 <h4>Mixpanel Dashboards & Product Analytics</h4>
@@ -140,18 +242,68 @@
                 <p class="teaser">Built Mixpanel dashboards and funnels to measure retention; used heatmaps and session replays to inform 5+ product changes.</p>
               </article>
 
-              <article class="project card" data-page="expertise/analytics-comparison.html" data-img="images/competitor_analysis.png">
+              <article class="project card" data-page="expertise/analytics-comparison.html" data-img="images/analysis.jpg">
                 <div class="card-media" style="background:linear-gradient(135deg,#f97316,#fb923c)"></div>
                 <h4>Analytics & Platform Analysis</h4>
                 <div class="card-tags"><span class="chip">Snowflake</span><span class="chip">Databricks</span><span class="chip">Amplitude</span></div>
                 <p class="teaser">Comparative analysis across 10+ analytics platforms (Snowflake vs Databricks, Amplitude vs Mixpanel/Heap) guiding platform choices.</p>
               </article>
+
+              
               </div>
             </div>
             <button class="slider-btn next" aria-label="Next">›</button>
           </div>
         </div>
       </section>
+
+
+<section id="work" class="panel">
+        <h1>My Works</h1>
+        <div class="work-div">
+            <div class="sec-1">
+        <div class="work-photo">
+          <img src="/images/petromax.png" alt="fabric-project">
+        </div>
+                <div class="details">
+                    <h3>End to End MS Fabric Project</h3>
+                    <p>Created a unified analytics system for oil production data using Fabric pipelines, notebooks, and Power BI visualization.
+                    </p>
+                    <button class="live-btn" onclick="live1()" aria-label="Open Live project - Travel Norway">Live</button>
+                </div>
+            </div>
+            <div class="sec-1">
+        <div class="work-photo">
+          <img src="/images/mixpanel_project.png" alt="mixpanel_project1">
+        </div>
+                <div class="details">
+                    <h3>Mixpanel Integration using SDKs</h3>
+                    <p>This implementation demonstrates how Mixpanel addresses the analytics gap by providing granular, real-time data across the user journey
+                    </p>
+                    <button class="live-btn" onclick="live2()" aria-label="Open Live project - Bridal Box">Live</button>
+                </div>
+            </div>
+
+            <div class="sec-1">
+        <div class="work-photo">
+          <img src="/images/Dashboarding.jpg" alt="Dashboard">
+        </div>
+                <div class="details">
+                    <h3>Created Dashboard for Business Insights</h3>
+                    <p>The dashboard provides interactive visualizations and key performance indicators (KPIs) to help stakeholders make informed decisions based on real-time data.
+                    </p>
+                    <button class="live-btn" onclick="live3()" aria-label="Open Live project - Render Leads">Live</button>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Different Projects -->
+
+
+
 
       <section id="activities" class="panel">
         <h2>Other Activities</h2>
@@ -224,5 +376,53 @@
     </main>
 
     <script src="assets/js/main.js" type="module"></script>
+    <script>
+      // Timeline reveal: make each .sec-1 reveal when scrolled into view
+      (function(){
+        const container = document.querySelector('.work-div');
+        if (!container) return;
+        const items = Array.from(container.querySelectorAll('.sec-1'));
+        const total = items.length || 1;
+
+        // Intersection observer to toggle visible class
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              el.classList.add('in-view');
+            } else {
+              // when element leaves the viewport from the top or bottom, remove visible state
+              // keep lightweight: remove when not intersecting
+              el.classList.remove('in-view');
+            }
+          });
+
+          // compute highest visible index to grow the line
+          const visible = items.map((it,i) => it.classList.contains('in-view') ? i : -1).filter(i=>i>=0);
+          const maxIndex = visible.length ? Math.max(...visible) : -1;
+          const fill = ((maxIndex + 1) / total) * 100;
+          container.style.setProperty('--line-fill', String(fill));
+          container.style.setProperty('--line-opacity', fill > 0 ? '1' : '0');
+        }, { root: null, threshold: 0.25 });
+
+        items.forEach(i => io.observe(i));
+
+        // when user reaches very bottom of page, hide the line and reset reveals
+        const onScrollEnd = () => {
+          const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20;
+          if (nearBottom) {
+            container.style.setProperty('--line-opacity', '0');
+            items.forEach(it => it.classList.remove('in-view'));
+            container.style.setProperty('--line-fill', '0');
+          } else {
+            container.style.setProperty('--line-opacity', '1');
+          }
+        };
+
+        window.addEventListener('scroll', () => { window.requestAnimationFrame(onScrollEnd); }, { passive: true });
+        // initial run
+        onScrollEnd();
+      })();
+    </script>
   </body>
 </html>

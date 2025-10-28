@@ -71,10 +71,13 @@ function closeModal(){
 }
 
 cards.forEach(card=>{
-  card.addEventListener('click', ()=>{
+  card.addEventListener('click', (e)=>{
+    // If the user clicked a real link inside the card, let the anchor handle navigation.
+    if(e.target.closest('a')) return;
+
     const page = card.getAttribute('data-page');
     if(page){
-      // navigate to full activity page
+      // navigate to full activity/expertise page
       window.location.href = page;
       return;
     }
@@ -118,6 +121,8 @@ else loadCardImages();
 
 // -------- Expertise slider behavior (news-plate mode) --------
 const expertiseStage = document.getElementById('expertise-stage');
+// Defensive: ensure the expertise stage is interactive on initial load so links are clickable
+if(expertiseStage) expertiseStage.classList.add('active');
 const sliderTrack = document.querySelector('.slider-track');
 const sliderViewport = document.querySelector('.slider-viewport');
 const prevBtn = document.querySelector('.slider-btn.prev');
@@ -193,4 +198,18 @@ if(expertiseStage && 'IntersectionObserver' in window){
   }, {threshold: [0, 0.15, 0.35, 0.6]});
   stageObserver.observe(expertiseStage);
 }
+
+// Defensive click handler for expertise project cards: ensure clicking the tile navigates
+document.querySelectorAll('.project.card').forEach(card => {
+  try { card.style.cursor = 'pointer'; } catch(e) {}
+  card.addEventListener('click', (e) => {
+    // if the click started on an anchor, let the anchor handle navigation
+    if(e.target.closest && e.target.closest('a')) return;
+    const page = card.dataset.page || card.getAttribute('data-page');
+    if(!page) return;
+    // normalize leading slash so file:// tests still work
+    const target = page.startsWith('/') ? page.slice(1) : page;
+    window.location.href = target;
+  });
+});
 
