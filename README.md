@@ -1,60 +1,129 @@
-# Portfolio Website — Quick Starter
+# Tasmia Binte Monzoor - Portfolio Website
 
-This repository contains a static, single-page portfolio/resume scaffold you can customize.
+A modern, responsive portfolio website showcasing my experience in Data Science, AI/ML, Business Intelligence, and Cloud technologies.
 
-Files added
-- `index.html` — main single-page portfolio.
-- `assets/css/styles.css` — styles with light/dark theme variables and responsive layout.
-- `assets/js/main.js` — small scripts: theme toggle + smooth scroll.
+## 🌐 Live Demo
 
-How to use
-1. Open `index.html` in your browser (double-click or use a small static server).
+Visit the live website: [Portfolio Website](https://tasmia-portfolio.netlify.app) *(Update with your actual URL)*
 
-PowerShell quick preview (serves current folder on port 8000):
-```powershell
-python -m http.server 8000
-# then open http://localhost:8000 in your browser
+## 👋 About Me
+
+I'm Tasmia Binte Monzoor, a recent graduate in Information and Communication Engineering from Bangladesh University of Professionals (BUP), specializing in Data Science, AI, ML, BI, and Cloud technologies. Currently working as an Intern in the Software Solutions Team at Smart Technologies Ltd.
+
+## ✨ Features
+
+- **Responsive Design**: Fully responsive layout that works seamlessly on desktop, tablet, and mobile devices
+- **Dark/Light Theme**: Toggle between dark and light themes with smooth transitions
+- **Interactive Timeline**: Animated work experience timeline with scroll-based reveals
+- **Project Showcase**: Carousel slider featuring expertise areas and projects with detailed descriptions
+- **Activities Section**: Interactive cards highlighting achievements, competitions, and community involvement
+- **Blog Integration**: Dedicated blog section for sharing technical articles and insights
+- **Smooth Animations**: Professional animations and transitions throughout the site
+
+## 🛠️ Tech Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Styling**: Custom CSS with CSS variables for theming
+- **Fonts**: Google Fonts (Inter)
+- **Deployment**: Netlify
+- **Version Control**: Git & GitHub
+
+## 📂 Project Structure
+
+```
+Personal-Portfolio/
+├── index.html              # Main portfolio page
+├── blogs.html              # Blog listing page
+├── assets/
+│   ├── css/
+│   │   └── styles.css      # Main stylesheet with theme variables
+│   └── js/
+│       └── main.js         # Interactive features and theme toggle
+├── images/                 # Image assets
+├── expertise/              # Detailed expertise pages
+├── activities/             # Activity detail pages
+├── posts/                  # Blog posts
+├── projects/               # Project details
+├── scripts/                # Additional scripts
+└── README.md               # This file
 ```
 
-What to edit
-- Replace the placeholder text in `index.html` (name, experience entries, projects, contact).
--- Replace the avatar by placing an image at `assets/img/profile.jpg` or use the "Upload photo" control in the left panel while previewing the site. (Note: this repo currently stores images under `images/` and the profile image `tasmiia.jpg` is at the repo root.)
-- Update color tokens in `assets/css/styles.css` if you want different brand colors.
+## 🚀 Getting Started
 
-Photo & LinkedIn
-- Upload your profile photo using the left-panel "Upload photo" button while previewing the site. Alternatively, place the image at `assets/img/profile.jpg`.
+### Prerequisites
 
-Organizing images
------------------
-This repository currently keeps visual assets inside the top-level `images/` folder (and the profile image `tasmiia.jpg` is at the repo root). If you prefer to put all site images under `assets/img/` (recommended for tidy structure), you can move them locally and update references.
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- Python (for local development server) or any static file server
 
-PowerShell example to move image files locally from the repo root into `assets/img/` (run from project root):
-```powershell
-mkdir -Force assets\img
-Move-Item images\* assets\img\
-Move-Item tasmiia.jpg assets\img\
-```
+### Running Locally
 
-Quick path-replace across HTML files (PowerShell):
-```powershell
-Get-ChildItem -Path . -Filter *.html -Recurse | ForEach-Object {
-	(Get-Content $_.FullName) -replace '/images/', '/assets/img/' | Set-Content $_.FullName
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/errortax/Personal-Portfolio.git
+   cd Personal-Portfolio
+   ```
+
+2. **Start a local server**
+   
+   Using Python:
+   ```bash
+   python -m http.server 8000
+   ```
+   
+   Or using Node.js (if you have `http-server` installed):
+   ```bash
+   npx http-server -p 8000
+   ```
+
+3. **Open in browser**
+   
+   Navigate to `http://localhost:8000` in your web browser
+
+## 📋 Sections
+
+- **About**: Introduction and professional summary
+- **Experience**: Work experience timeline with detailed descriptions
+- **Expertise & Projects**: Showcasing technical expertise and hands-on projects
+  - Microsoft Fabric & Power BI
+  - Azure AI Agents & Copilot Studio
+  - Power Apps & Power Automate
+  - Mixpanel Dashboards & Product Analytics
+  - Analytics & Platform Analysis
+- **My Works**: Featured project implementations with live demos
+- **Other Activities**: Community involvement, competitions, and achievements
+- **Education**: Academic background and honors
+- **Contact**: Get in touch information
+
+## 🎨 Customization
+
+The website uses CSS variables for easy theming. You can customize colors by modifying the variables in `assets/css/styles.css`:
+
+```css
+:root {
+  --accent: #06b6d4;
+  --panel-bg: #ffffff;
+  /* ... other variables */
 }
-# If profile image is referenced as "tasmiia.jpg" (root), replace with new path:
-Get-ChildItem -Path . -Filter *.html -Recurse | ForEach-Object {
-	(Get-Content $_.FullName) -replace 'tasmiia.jpg', 'assets/img/tasmiia.jpg' | Set-Content $_.FullName
-}
 ```
 
-Note: I cannot move binary image files for you from this environment — run the above commands locally to reorganize files and update references. After you run them, open the site locally (`python -m http.server 8000`) to verify images load correctly.
-- Your LinkedIn profile link is already wired into the left panel (visible link). The site no longer attempts to fetch LinkedIn pages automatically (import button removed) because that approach is unreliable in browsers due to CORS restrictions.
+## 📱 Contact
 
-Other Activities (cards)
-- An "Other Activities" section was added. It uses cards you can replace with images (placeholders use CSS gradients). Each card has a title and a short story; click a card to open a modal with the activity story. To add images, replace the `.card-media` element's background with `background-image:url('assets/img/your-image.jpg')` or swap the inline style.
+- **Email**: [tasmiamonzoor@gmail.com](mailto:tasmiamonzoor@gmail.com)
+- **LinkedIn**: [Tasmia Binte Monzoor](https://www.linkedin.com/in/tasmia-binte-monzoor)
+- **GitHub**: [@errortax](https://github.com/errortax)
+- **Phone**: +880 1986 289976
+- **Location**: Agargaon, Dhaka-1207, Bangladesh
 
-Next steps I can help with
-- Add content from your resume (I can parse a PDF or text and populate sections).
-- Improve accessibility or add printable resume view.
-- Convert to a React/Next.js site or add a build step.
+## 📄 License
 
-Please tell me your preferred copy, a profile photo, or a PDF resume and I'll populate the site for you.
+This project is open source and available for personal use. Feel free to fork and customize for your own portfolio!
+
+## 🙏 Acknowledgments
+
+- Design inspiration from modern portfolio trends
+- Icons and fonts from Google Fonts
+- Hosted on Netlify
+
+---
+
+**Designed & Built by Tasmia Binte Monzoor** © 2025
