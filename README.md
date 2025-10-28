@@ -4,7 +4,7 @@ A modern, responsive portfolio website showcasing my experience in Data Science,
 
 ## 🌐 Live Demo
 
-Visit the live website: [Portfolio Website](https://tasmia-portfolio.netlify.app) *(Update with your actual URL)*
+This portfolio is deployed and hosted on Netlify. Visit the live website to see the portfolio in action!
 
 ## 👋 About Me
 
