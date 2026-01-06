@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Designing a Proper Scrollable Container in Power Apps — Tasmia Binte Monzoor</title>
+    <link href="/assets/css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="brand">Tasmia Binte Monzoor</div>
+      <nav class="navlinks">
+        <a href="/index.html#about">About</a>
+        <a href="/index.html#experience">Experience</a>
+        <a href="/index.html#projects">Projects</a>
+        <a href="/blogs.html">Blogs</a>
+        <a href="/index.html#education">Education</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <a class="resume-btn" href="/New Resume (1).pdf" target="_blank">Download CV</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="article-hero article-hero-offset">
+        <a class="back" href="/blogs.html">← Back to Blogs</a>
+        <a class="back-main" href="/index.html">Back to main</a>
+        <div class="article-header">
+          <h1>Designing a Proper Scrollable Container in Power Apps</h1>
+          <p class="article-meta">Jan 6, 2026 · Power Apps · UI/UX · Canvas Apps</p>
+        </div>
+      </div>
+
+      <article class="article-body">
+        <h2>A Better Way to Display Long Content (with an Outlook Mail Use Case)</h2>
+
+        <h3>Introduction</h3>
+        <p>When building canvas apps in Power Apps, one of the most common challenges is handling long-form content efficiently. Whether you're displaying email bodies, lengthy descriptions, or detailed records, the default controls often fall short. In this article, I'll walk through designing a proper scrollable container that handles dynamic content gracefully, using an Outlook mail reader as a practical example.</p>
+
+        <img src="/images/main_im.png" alt="Power Apps scrollable container" />
+
+        <h3>The Problem with Default Controls</h3>
+        <p>Power Apps provides several controls out of the box — text labels, galleries, and HTML text controls. However, each has limitations when dealing with long content:</p>
+        <ul>
+          <li><strong>Label controls</strong> don't support scrolling natively and can overflow beyond the screen.</li>
+          <li><strong>Galleries</strong> are excellent for lists but become cumbersome when displaying single, long text blocks.</li>
+          <li><strong>HTML Text controls</strong> offer some flexibility but lack fine-grained control over scrolling behavior and styling.</li>
+        </ul>
+
+        <p>These limitations become especially apparent in scenarios like email readers, document viewers, or form submissions where users need to read through extensive content without losing context or experiencing poor UI/UX.</p>
+
+        <h2>Solution: Building a Custom Scrollable Container</h2>
+        <p>The solution involves combining multiple Power Apps controls strategically to create a seamless scrolling experience. Here's the architecture:</p>
+        <ul>
+          <li>A container component that wraps the content</li>
+          <li>Proper height calculations based on content length</li>
+          <li>Scroll bars that appear only when needed</li>
+          <li>Responsive design that adapts to different screen sizes</li>
+        </ul>
+
+        <h3>Use Case: Outlook Mail Reader</h3>
+        <p>When you're redesigning something like an Outlook mail screen in Power Apps, the goal is simple: show the full email body in a way that feels natural to the user. Real email bodies don't fit neatly into fixed heights — they can be short one-liners or multi-paragraph essays. Yet, when we place that content inside a gallery or a fixed card, the result is often:</p>
+        <ul>
+          <li>Text gets cut off</li>
+          <li>Scrolling only shows part of the content</li>
+          <li>The bottom of the message is missing</li>
+          <li>Users get frustrated</li>
+        </ul>
+
+        <p>This happens because galleries and fixed-height containers don't grow with the text — they force content into a small space. What's needed instead is a container that actually scrolls to the end, no matter how much text there is.</p>
+
+        <img src="/images/1B.png" alt="Problem: Fixed height containers cutting off content" />
+
+        <p>Here we can see the replies text containers are too short and it is stuck inside a smaller place. So the solution is to make the container scroll until the full message reveals inside it clearly, then the next item should be shown. Let's implement it:</p>
+
+
+
+        <h4>Step 1: Create a Scrollable Screen</h4>
+        <p>Let's take a scrollable screen first from the <strong>New screen</strong> option. This will give us a scrollable card. This makes anything inside it scrollable.</p>
+        <img src="/images/2B.png" alt="Example of cut-off email content" />
+        <img src="/images/3B.png" alt="Creating a new scrollable screen in Power Apps" />
+
+        <h4>Step 2: Quick Designing</h4>
+        <p>Now let's do a quick designing:</p>
+        <ul>
+          <li><strong>Screen Fill:</strong> RGBA(245, 247, 250, 0.87)</li>
+          <li>Add a label and in the <strong>Text</strong> property: "Assigned Emails"</li>
+          <li>Add a container, a header title and a Vertical gallery to make it look like Outlook mail gallery</li>
+        </ul>
+
+        <img src="/images/4.png" alt="Setting up the screen layout" />
+
+        <p>Now cut the <strong>Canvas</strong> and paste it inside the container right part. This is the part where we will see all the email body texts and replies just like Outlook. (Wait till we design!)</p>
+
+        <img src="/images/5.png" alt="Container layout structure" />
+
+        <p>Inside this add a rectangle and a label for the heading.</p>
+
+        <img src="/images/6.png" alt="Adding header rectangle and label" />
+
+        <p>Next I have added a vertical gallery and connected with my list for Data.</p>
+
+
+        <p>Now the upper rectangle is the subject of the selected mail from the gallery. Now we need to see the mail contents inside the scrollable part. Make the card longer — it is now scrollable till the end. Now let's add a container inside the card. One for email and one for reply.</p>
+
+         <img src="/images/7.png" alt="Vertical gallery connected to data source" />
+
+        <p>First place the email container, then scroll down and put the reply container under the email part. After the designing, now comes the main part!</p>
+
+       
+
+        <h4>Making Content Auto-Expand</h4>
+        <p>Make the <strong>mailBodytxt</strong> AutoHeight <strong>On</strong>. So it will take only what it needs. We need to make the container flexible as well.</p>
+
+        <img src="/images/8.png" alt="Email subject header design" />
+
+
+       
+        <p>Set the container height to:</p>
+        <pre><code>mailBodytxt.Height + mailBodytxt.Y + 50</code></pre>
+
+        <p>So it will grow based on the mailBodytxt height. 50 is for keeping some extra space.</p>
+
+ <img src="/images/9.png" alt="Email and reply containers placement" />
+
+        
+
+        <h4>Adding Reply Gallery</h4>
+        <p>Now adding the reply gallery inside the reply container and designing it the same way.</p>
+<img src="/images/10.png" alt="Setting AutoHeight property on mail body text" />
+
+        <p>Notice how the content appears stacked up and the mail body cannot be read properly. Set the text body to AutoHeight <strong>On</strong>.</p>
+        <img src="/images/11.png" alt="Reply gallery setup" />
+
+        
+
+        <p>The container needs to grow with the size as well. Make the height of the container:</p>
+<img src="/images/12.png" alt="Reply text appearing stacked before fix" />
+        <pre><code>replyBody_txt_1.Height + replyBody_txt_1.Y + 30</code></pre>
+
+        <img src="/images/13.png" alt="Container height formula configuration" />
+
+        <p>This is how we can show all the gallery texts in a very user-friendly way.</p>
+
+        <video width="100%" height="auto" controls>
+          <source src="/autoheight.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <h3>Conclusion</h3>
+        <p>Designing proper scrollable containers in Power Apps requires thoughtful planning and understanding of control behaviors. By combining containers, HTML Text controls, and smart data loading strategies, you can create user experiences that rival native email clients. The Outlook mail reader use case demonstrates how these principles apply to real-world scenarios, but the pattern is adaptable to any long-content display requirement — document viewers, knowledge bases, or form submissions.</p>
+
+        <p>Remember to prioritize performance, accessibility, and mobile responsiveness throughout your design process. With these considerations in mind, your Power Apps will deliver exceptional experiences even when handling extensive content.</p>
+
+        <img src="/images/main_im.png" alt="Final implementation" />
+
+        <h3>Further Resources</h3>
+        <ul>
+          <li><a href="https://learn.microsoft.com/power-apps" target="_blank" rel="noopener noreferrer">Microsoft Power Apps Documentation</a></li>
+          <li><a href="https://www.linkedin.com/in/tasmia-binte-monzoor/" target="_blank" rel="noopener noreferrer">Send me a Connect on linkedin</a></li>
+        </ul>
+
+      </article>
+
+    <script src="/assets/js/main.js" type="module"></script>
+  </body>
+</html>

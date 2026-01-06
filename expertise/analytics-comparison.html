@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Analytics Platform Comparison — Case Study</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <header class="topnav">
+    <div class="brand">Tasmia B. Monzoor</div>
+    <div class="actions">
+      <button id="theme-toggle">Toggle</button>
+    </div>
+  </header>
+
+  <main class="content article-hero-offset">
+    <div class="article-hero">
+      <a href="/index.html" class="resume-btn">← Back</a>
+      <h1>Analytics & Platform Analysis</h1>
+      <p class="lead">Comparative evaluations that inform platform choices and migration plans.</p>
+    </div>
+
+    <article class="article-body">
+      <h3>Scope</h3>
+      <p>Compared Snowflake, Databricks, and lakehouse patterns for data warehousing needs; compared Mixpanel, Amplitude, and Heap for product analytics.</p>
+
+      <h3>Approach</h3>
+      <ul>
+        <li>Defined evaluation criteria: ingestion latency, query performance, cost model, operational overhead, ecosystem integrations.</li>
+        <li>Built prototype ingestion and sample dashboards for each platform to measure time-to-insight.</li>
+      </ul>
+
+      <h3>Findings</h3>
+      <p>Snowflake offers excellent SQL performance for BI workloads; Databricks shines for ML/ETL heavy teams. Mixpanel provides straightforward product analytics with strong composability for funnels, while Amplitude excels at behavioral cohorting and cross-device stitching.</p>
+
+      <h3>Recommendations</h3>
+      <p>Choose based on primary workload: BI-first organizations -> Snowflake + dbt; ML-first organizations -> Databricks. For product metrics, prioritize event quality and instrumentation before committing to a vendor.</p>
+    </article>
+  </main>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

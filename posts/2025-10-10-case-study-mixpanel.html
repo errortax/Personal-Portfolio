@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Case Study — Mixpanel Integration — Tasmia Binte Monzoor</title>
+    <link href="/assets/css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topnav">
+      <div class="brand">Tasmia Binte Monzoor</div>
+      <nav class="navlinks">
+        <a href="/index.html#about">About</a>
+        <a href="/index.html#experience">Experience</a>
+        <a href="/index.html#projects">Projects</a>
+        <a href="/blogs.html">Blogs</a>
+        <a href="/index.html#education">Education</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <a class="resume-btn" href="/New Resume (1).pdf" target="_blank">Download CV</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="article-hero article-hero-offset">
+        <a class="back" href="/blogs.html">← Back to Blogs</a>
+        <a class="back-main" href="/index.html">Back to main</a>
+        <div class="article-header">
+          <h1>Case Study: Integrating Mixpanel for Product Analytics</h1>
+          <p class="article-meta">Oct 10, 2025 · Analytics · Mixpanel · Product</p>
+        </div>
+      </div>
+
+      <article class="article-body">
+        <h2>Mixpanel Integration in a Personal Budget Tracking Web Application</h2>
+
+        <h3>Project Overview</h3>
+        <p>This project focuses on integrating Mixpanel, a product analytics platform, into a personal budget tracking web application. While the app allows users to manage budgets, track expenses, and set goals, the primary aim of the project is embedding intelligent analytics through Mixpanel to gain real-time user insights, optimize user journeys, and support data-driven product evolution.</p>
+
+ <img src="/images/mixpanel.jpg" alt="mixpanel-dashboards" />
+
+        <h3>Problem Statement</h3>
+        <p>Modern web applications often lack visibility into how users interact with features. This disconnect leads to assumptions about user needs, ineffective feature rollouts, and missed opportunities for retention and engagement. Traditional tracking tools provide surface-level metrics (page views, bounce rates), but rarely offer event-level insights, real-time behavior tracking, or actionable data required for deep product optimization.</p>
+
+        <p>For comparison: Google Analytics 4 (GA4) is strong for marketing and traffic analysis but is session- and aggregate-focused. Amplitude offers powerful behavioral analytics but increases engineering and governance overhead. Mixpanel was chosen because it balances ease-of-use, flexible event-level analysis, and cost-effective scaling for product teams.</p>
+
+        <h3>Why Mixpanel Is a More Accessible Choice</h3>
+        <ul>
+          <li>Faster onboarding with less upfront data governance required.</li>
+          <li>Transparent pricing based on monthly tracked users, enabling predictable costs.</li>
+          <li>User-friendly interface for both technical and non-technical stakeholders to build reports and visualizations quickly.</li>
+        </ul>
+
+        <p>In a personal finance app, knowing when a user adds a budget, logs an expense, or abandons goal tracking is critical. Without proper analytics, product development becomes reactive rather than proactive.</p>
+
+        <h3>Project Objective</h3>
+        <p>Implement Mixpanel across the full user journey to enable:</p>
+        <ul>
+          <li>Event-level tracking for all user actions (signup through logout).</li>
+          <li>Behavioral analytics to uncover trends in budgeting and goal interactions.</li>
+          <li>Real-time decision support based on live activity data.</li>
+          <li>Lifecycle stage mapping to classify users and improve retention strategies.</li>
+        </ul>
+
+        <h3>Tech Stack</h3>
+        <table>
+          <tr><td>Frontend</td><td>Vite, React, TypeScript</td></tr>
+          <tr><td>Auth Service</td><td>Firebase Authentication</td></tr>
+          <tr><td>Analytics</td><td>Mixpanel</td></tr>
+          <tr><td>Deployment</td><td>Netlify</td></tr>
+        </table>
+
+        <p>Live: <a href="https://mix-finance.netlify.app/" target="_blank" rel="noopener noreferrer">https://mix-finance.netlify.app/</a></p>
+
+        <h3>Core Mixpanel Implementation</h3>
+        <p>Mixpanel was integrated using the JavaScript client SDK (mixpanel-browser). The SDK was installed via npm:</p>
+        <pre><code>npm install --save mixpanel-browser</code></pre>
+
+        <p>The central integration lives in <code>App.tsx</code> where Mixpanel is initialized with the project token, users are identified, and core events (page views, login, logout) are tracked. We enabled autocapture and session recording to reduce manual instrumentation and gain replay context during investigations.</p>
+
+        <h4>Autocapture</h4>
+        <p>Autocapture automatically collects common interactions without manual code (pageviews, clicks, input, scroll, submit). Sensitive text content capture is disabled.</p>
+
+        <h4>Session Recording & Heatmaps</h4>
+        <p>Session recording was enabled to allow full replays (useful for debugging and UX analysis). Heatmap data is collected when session recording is active to surface the most interacted areas of the UI.</p>
+
+        <h3>Component-specific Tracking</h3>
+        <h4>Signup (Signup.tsx)</h4>
+        <p>On successful registration (Firebase createUserWithEmailAndPassword):</p>
+        <ul>
+          <li>Call <code>mixpanel.identify(email)</code> to set the distinct id.</li>
+          <li>Track a <strong>User Signed Up</strong> event with properties: <code>email</code>, <code>uid</code>, and timestamp.</li>
+        </ul>
+
+        <h4>Login (Login.tsx)</h4>
+        <p>On successful login:</p>
+        <ul>
+          <li>Identify the user with <code>mixpanel.identify(user.uid)</code>.</li>
+          <li>Track a <strong>Logged In</strong> event with properties like <code>email</code> and <code>method</code> (e.g., email/password).</li>
+        </ul>
+
+        <h4>Dashboard (Dashboard.tsx)</h4>
+        <p>Track events for budget source creation/updates, budget category creation, and edits. Example events:</p>
+        <ul>
+          <li><strong>Budget Source AddedOrUpdated</strong> — properties: <code>category</code>, <code>amount</code>.</li>
+          <li><strong>Budget Category Added</strong> — properties: <code>category</code>.</li>
+          <li><strong>Budget Source Edited</strong> — properties: <code>category</code>, <code>amount</code>.</li>
+        </ul>
+
+        <h4>Report (Report.tsx)</h4>
+        <p>On mounting the report page we send a <strong>Report Page Viewed</strong> event including <code>expenseCount</code> and <code>budgetSourceCount</code>. Also track when users click "Back to Dashboard" to measure navigation behavior.</p>
+
+        <h4>Expense Chart Interactions</h4>
+        <p>Chart segments (e.g., pie slices) emit events such as <strong>Expense Category Clicked</strong> with property <code>category</code>, enabling us to trace which categories drive engagement.</p>
+
+        <h3>Mixpanel Dashboard & Operations</h3>
+        <p>Events in the app form the backbone of Mixpanel reports. Key operational items implemented include:</p>
+        <ul>
+          <li>Event lexicon and property documentation (Lexicon) to keep definitions consistent.</li>
+          <li>Cohorts built from event filters to segment power users or users who completed onboarding.</li>
+          <li>Boards (dashboards) assembled from Insights, Funnels, and Retention reports for stakeholders.</li>
+        </ul>
+
+        <h3>Outcomes</h3>
+        <p>By integrating Mixpanel the finance tracker gained actionable intelligence:</p>
+        <ul>
+          <li>Improved user retention through lifecycle segmentation and targeted interventions.</li>
+          <li>Optimized key features informed by event-level insights and session replays.</li>
+          <li>Personalized experiences and data-driven product decisions.</li>
+        </ul>
+
+        <h3>Conclusion</h3>
+        <p>This implementation demonstrates how Mixpanel addresses the analytics gap by providing granular, real-time data across the user journey. The app is now able to run cohort and funnel analyses, perform session replay investigations, and build a foundation for experimentation and personalization — turning passive data into actionable intelligence.</p>
+
+      </article>
+
+    <script src="/assets/js/main.js" type="module"></script>
+  </body>
+</html>
